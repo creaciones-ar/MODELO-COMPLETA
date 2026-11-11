@@ -7,9 +7,16 @@ const CONFIG = {
   mapsUrl: "https://maps.app.goo.gl/y8uJtqJ5FoqePBLZ6",                                 // link de Google Maps del salón. Vacío = no aparece el botón
   alias: "isabella",                                   // alias o CBU. Vacío = no aparece la sección de regalos
   albumUrl: "https://photos.app.goo.gl/WpPPTVfGd7tURbah6",   // álbum compartido de Isabella (QR y botón)
-  playlistUrl: "https://open.spotify.com/playlist/5Sf5nsXzMx0s9bSrUkwPwW?si=f115921d2ada4890&pt=f36ebe1e791f43576a4096c71f848620",   // playlist de Isabella
   confirmarAntes: "Confirmar antes del 1 de diciembre",                          // por ejemplo "Confirmar antes del 1 de diciembre". Vacío = no aparece
-  mensajeWa: "Hola! Confirmo mi asistencia a los XV de Isabella"
+  mensajeWa: "Hola! Confirmo mi asistencia a los XV de Isabella",
+    // Trivia: q = pregunta, o = las 3 opciones, a = cuál es la correcta (0 = la primera, 1 = la segunda, 2 = la tercera). REEMPLAZAR por preguntas reales.
+  trivia: [
+    { q: "¿Cuál es mi comida favorita?", o: ["Pizza", "Empanadas", "Milanesa"], a: 0 },
+    { q: "¿Cuál es mi color favorito?", o: ["Rojo", "Azul", "Verde"], a: 0 },
+    { q: "¿Cuál es mi frase más repetida?", o: ["Ya voy", "Tengo hambre", "No sé qué ponerme"], a: 1 },
+    { q: "Pregunta 4", o: ["Opción A", "Opción B", "Opción C"], a: 0 },
+    { q: "Pregunta 5", o: ["Opción A", "Opción B", "Opción C"], a: 0 }
+  ]
 };
 
 const $ = id => document.getElementById(id);
@@ -20,7 +27,6 @@ $('wa-btn').href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(C
 if (CONFIG.mapsUrl) { $('maps-btn').href = CONFIG.mapsUrl; show('maps-btn'); }
 if (CONFIG.alias) { $('alias').textContent = CONFIG.alias; show('gift-section', 'gift-respiro'); }
 if (CONFIG.confirmarAntes) { $('confirm-note').textContent = CONFIG.confirmarAntes; show('confirm-note'); }
-if (CONFIG.playlistUrl) { $('playlist-link').href = CONFIG.playlistUrl; show('playlist-section', 'playlist-respiro'); }
 if (CONFIG.albumUrl) {
   $('album-link').href = CONFIG.albumUrl;
   show('album-section', 'album-respiro');
@@ -205,3 +211,26 @@ document.querySelectorAll('img[data-icon]').forEach(img => {
   };
   next();
 });
+
+
+/* ===== Trivia ===== */
+let qi = 0, score = 0;
+function showQ() {
+  const box = $('trivia-box'), T = CONFIG.trivia;
+  if (qi >= T.length) {
+    box.innerHTML = `<p class="q">¡Acertaste ${score} de ${T.length}!</p><p>Gracias por jugar ❤️</p><button id="again" class="btn light" type="button">Jugar de nuevo</button>`;
+    $('again').onclick = () => { qi = 0; score = 0; showQ(); };
+    return;
+  }
+  const t = T[qi];
+  box.innerHTML = `<p class="q">${t.q}</p>` + t.o.map((x, k) => `<button class="opt" type="button" data-k="${k}">${x}</button>`).join('');
+  box.querySelectorAll('.opt').forEach(b => b.onclick = () => {
+    const ok = +b.dataset.k === t.a;
+    if (ok) score++;
+    b.classList.add(ok ? 'ok' : 'bad');
+    box.querySelectorAll('.opt').forEach(o => o.disabled = true);
+    box.querySelector(`[data-k="${t.a}"]`).classList.add('ok');
+    setTimeout(() => { qi++; showQ(); }, 1200);
+  });
+}
+$('trivia-start').onclick = () => { qi = 0; score = 0; showQ(); };
