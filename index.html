@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MIS SOÑADOS 15 AÑOS - ISABELLA</title>
-<link rel="stylesheet" href="styles.css?v=33">
+<link rel="stylesheet" href="styles.css?v=34">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -133,7 +133,18 @@
     <h2 class="script big">Dress Code</h2>
     <p class="label">Elegante</p>
   </section>
+  <div class="respiro" aria-hidden="true"></div>
 
+  <!-- TRIVIA -->
+  <section class="trivia-section">
+    <img data-icon="icono-trivia" alt="" class="ico-gif" aria-hidden="true">
+    <h2 class="script big">¿Cuánto me conocés?</h2>
+    <div id="trivia-box">
+      <p>Jugamos un poco y descubrimos cuánto sabés de mí</p>
+      <button id="trivia-start" class="btn light" type="button">Comenzar trivia</button>
+    </div>
+  </section>
+    
   <div id="gift-respiro" class="respiro hidden" aria-hidden="true"></div>
 
   <!-- 7. REGALO (aparece solo si hay alias en script.js) -->
@@ -166,17 +177,6 @@
     <a id="album-link" class="btn solid" target="_blank" rel="noopener" href="#">Ir al álbum</a>
   </section>
 
-  <div id="playlist-respiro" class="respiro hidden" aria-hidden="true"></div>
-
-  <!-- 9b. PLAYLIST (aparece solo si hay playlistUrl en script.js) -->
-  <section id="playlist-section" class="center-section hidden">
-    <img data-icon="icono-musica" alt="" class="ico-gif" aria-hidden="true">
-    <h2 class="script big">Nuestra playlist</h2>
-    <p class="small">¿Qué tema no puede faltar en la fiesta? Sumalo a nuestra lista de Spotify.</p>
-    <a id="playlist-link" class="btn solid" target="_blank" rel="noopener" href="#">Agregar canción</a>
-    <p class="note">Tocá el botón, unite a la lista y agregá tu tema.</p>
-  </section>
-
   <!-- 10. CONFIRMACIÓN -->
   <section class="rsvp">
     <div class="rsvp-card">
@@ -199,6 +199,6 @@
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
-<script src="script.js?v=29"></script>
+<script src="script.js?v=30"></script>
 </body>
 </html>
